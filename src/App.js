@@ -6,6 +6,8 @@ import PlayerTwo from './Components/PlayerTwo'
 import Header from './Components/Header'
 import GameContainer from './Containers/GameContainer';
 
+// API LIVES IN APP
+
 function App() {
   return (
     <div className="container">

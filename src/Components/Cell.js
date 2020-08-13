@@ -7,7 +7,7 @@ class Cell extends React.Component {
   render(){
 
     return(
-      <div ></div>
+      <div className="cell"></div>
     )
   }
 }

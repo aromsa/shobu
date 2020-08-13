@@ -11,9 +11,9 @@ class BoardsContainer extends React.Component {
  
       <div className="boards-container">
         <Board />
-        <div className="white-board-1"> </div>
-        <div className="brown-board-2"> </div>
-        <div className="brown-board-3"> </div>
+        <Board />
+        <Board />
+        <Board />
       </div>
 
     )
