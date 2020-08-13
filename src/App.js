@@ -1,17 +1,26 @@
 import React from 'react';
 import './App.css';
 import './index.css'
+// import PlayerOne from './Components/PlayerOne.js'
 
 function App() {
   return (
-    <div class="container">
+    <div className="container">
       <header>SHOBU</header>
-      <nav>Navigation</nav>
+
+      <div className="player-1">Player One</div>
       <main>
-      <h1>Main</h1>
-      <p>Vestibulum consectetur sit amet nisi ut consectetur. Praesent efficitur, nibh vitae fringilla scelerisque, est neque faucibus quam, in iaculis purus libero eget mauris. Curabitur et luctus sapien, ac gravida orci. Aliquam erat volutpat. In hac habitasse platea dictumst. Aenean commodo, arcu a commodo efficitur, libero dolor mollis turpis, non posuere orci leo eget enim. Curabitur sit amet elementum orci, pulvinar dignissim urna. Morbi id ex eu ex congue laoreet. Aenean tincidunt dolor justo, semper pretium libero luctus nec. Ut vulputate metus accumsan leo imperdiet tincidunt. Phasellus nec rutrum dolor. Cras imperdiet sollicitudin arcu, id interdum nibh fermentum in.</p>
+      <h1>Game</h1>
+      <br></br>
+      <div className="game-container">
+      <div className="inline-container">
+
+      </div>
+
+
+      </div>
       </main>
-      <aside>Related links</aside>
+      <div className="player-2">Player Two</div>
       <footer>Footer</footer>
     </div>
   );
