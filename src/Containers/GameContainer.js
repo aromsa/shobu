@@ -6,6 +6,7 @@ import BoardsContainer from './BoardsContainer'
 class GameContainer extends React.Component {
 
   render(){
+    // console.log(this.props.currentGame)
 
     return(
       <main>
@@ -13,7 +14,7 @@ class GameContainer extends React.Component {
       <br></br>
       <br></br>
       <div className="game-container"></div>
-      <BoardsContainer/>
+      <BoardsContainer currentGame={this.props.currentGame} />
       </main>
     )
   }

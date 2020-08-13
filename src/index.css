@@ -1,5 +1,5 @@
 body {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: Verdana, sans-serif;
 }
 
 .container {
@@ -64,7 +64,8 @@ h1 {
   justify-content: center;
 }
 
-.cell {
+.cell  {
+  box-sizing: border-box;
   justify-content: center;
   grid-template-columns: 45px;
   grid-template-rows: 45px;
@@ -72,6 +73,7 @@ h1 {
 }
 
 .board {
+  box-sizing: border-box;
   justify-content: center;
   grid-auto-flow: row;
   column-gap: 10px;
@@ -83,8 +85,9 @@ h1 {
 }
 
 .boards-container {
+    flex: 1;
+    box-sizing: border-box;
     grid-auto-flow: row;
-    border: 1px dashed #888;
     justify-content: center;
     display: grid;
     grid-template-columns: 250px 250px;
