@@ -2,14 +2,14 @@ import React from 'react';
 import '../App.css';
 import '../index.css'
 
-class Header extends React.Component {
+class Cell extends React.Component {
 
   render(){
 
     return(
-      <header>SHOBU</header>
+      <div ></div>
     )
   }
 }
 
-export default Header
+export default Cell

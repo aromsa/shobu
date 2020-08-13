@@ -64,11 +64,52 @@ h1 {
   justify-content: center;
 }
 
-.inline-container {
+.white-board-0 {
+  grid-auto-flow: row;
+  column-gap: 10px;
+  row-gap: 15px;
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px;
+  grid-template-rows: 50px 50px 50px 50px;
+  border: 1px dashed #888;
+  /* grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 5; */
+}
+
+/* .white-board-1 {
+  border: 1px dashed #888;
+  grid-column-start: 6;
+  grid-column-end: 10;
+  grid-row-start: 1;
+  grid-row-end: 5;
+}
+
+.brown-board-2 {
+  border: 1px dashed #888;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 6;
+  grid-row-end: 10;
+}
+
+.brown-board-3 {
+  border: 1px dashed #888;
+  grid-column-start: 6;
+  grid-column-end: 10;
+  grid-row-start: 6;
+  grid-row-end: 10;
+} */
+
+.boards-container {
+    grid-auto-flow: row;
+    border: 1px dashed #888;
     justify-content: center;
+    align-content: stretch;
     display: grid;
-    grid-template-columns: 50px 50px 50px 50px 20px 50px 50px 50px 50px;
-    grid-template-rows: 50px 50px 50px 50px 20px 50px 50px 50px 50px;
+    grid-template-columns: 250px 250px;
+    grid-template-rows: 250px 250px;
     column-gap: 10px;
     row-gap: 15px;
 }

@@ -1,26 +1,18 @@
 import React from 'react';
 import './App.css';
 import './index.css'
-// import PlayerOne from './Components/PlayerOne.js'
+import PlayerOne from './Components/PlayerOne'
+import PlayerTwo from './Components/PlayerTwo'
+import Header from './Components/Header'
+import GameContainer from './Containers/GameContainer';
 
 function App() {
   return (
     <div className="container">
-      <header>SHOBU</header>
-
-      <div className="player-1">Player One</div>
-      <main>
-      <h1>Game</h1>
-      <br></br>
-      <div className="game-container">
-      <div className="inline-container">
-
-      </div>
-
-
-      </div>
-      </main>
-      <div className="player-2">Player Two</div>
+      <Header/>
+      <PlayerOne />
+      <GameContainer />
+      <PlayerTwo/>
       <footer>Footer</footer>
     </div>
   );
