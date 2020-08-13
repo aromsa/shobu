@@ -7,7 +7,9 @@ class Piece extends React.Component {
   render(){
 
     return(
-    <p>{this.props.pieceId}</p>
+    <div onClick={() => this.props.selectPiece(this.props.pieceId)} className="piece">
+      {this.props.pieceId}
+    </div>
     )
   }
 }

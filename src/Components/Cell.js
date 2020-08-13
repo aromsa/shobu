@@ -6,11 +6,11 @@ import Piece from './Piece'
 class Cell extends React.Component {
 
   render(){
-    console.log(this.props.cellId)
+    // console.log(this.props.cellId)
     return(
-      <div className="cell">
+      <div onClick={() => {this.props.destinationCellClick(this.props.cellId)}} className="cell">
 
-        {this.props.cell ? <Piece pieceId={this.props.cell}/> : null}
+        {this.props.cell ? <Piece selectPiece={this.props.selectPiece} pieceId={this.props.cell}/> : null}
 
       </div>
     )

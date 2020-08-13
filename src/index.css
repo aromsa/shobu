@@ -65,11 +65,27 @@ h1 {
 }
 
 .cell  {
+  background: #eee;
   box-sizing: border-box;
   justify-content: center;
   grid-template-columns: 45px;
   grid-template-rows: 45px;
-  border: 1px dashed #888;
+  border: 1px solid #888;
+}
+
+.cell:hover {
+  background: #bfe6d9;
+  border: 1px solid rgb(18, 187, 131);
+}
+
+.piece:hover {
+  color:rgb(18, 187, 131);
+  display: grid;
+  box-sizing: border-box;
+  justify-content: center;
+  grid-template-columns: 45px;
+  grid-template-rows: 45px;
+  border: 1px solid #888;
 }
 
 .board {
@@ -81,11 +97,10 @@ h1 {
   display: grid;
   grid-template-columns: 50px 50px 50px 50px;
   grid-template-rows: 50px 50px 50px 50px;
-  border: 1px dashed #888;
+  border: 1px solid #888;
 }
 
 .boards-container {
-    flex: 1;
     box-sizing: border-box;
     grid-auto-flow: row;
     justify-content: center;
