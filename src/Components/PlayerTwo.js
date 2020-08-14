@@ -11,7 +11,6 @@ class PlayerTwo extends React.Component {
         <h1>Player Two</h1>
            <br></br>
         <p>Pieces Out:{this.props.piecesOut}</p>
-      
       </div>
     )
   }

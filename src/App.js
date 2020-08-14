@@ -4,24 +4,42 @@ import './index.css'
 import PlayerOne from './Components/PlayerOne'
 import PlayerTwo from './Components/PlayerTwo'
 import Header from './Components/Header'
-import GameContainer from './Containers/GameContainer';
-let gamesURL = "http://localhost:3000/games"
-let movesURL = "http://localhost:3000/moves"
+import GameContainer from './Containers/GameContainer'
+
+const gamesURL = "http://localhost:3000/games"
+const movesURL = "http://localhost:3000/moves"
+const playersURL = "http://localhost:3000/players"
 
 class App extends React.Component {
 
   state = {
     currentGame: [],
     pieceInPlay: "",
-    // destinationCell: "",
+    destinationCell: "",
+    player1: {},
+    player2: {},
     playerOnePiecesOut: 0,
     playerTwoPiecesOut: 0,
   }
 
-  componentDidMount(){
-    fetch(gamesURL)
-    .then(resp => resp.json())
-    .then(currentGame => this.setState({ currentGame: currentGame }))
+  fetchOngoingGame = () => {
+    fetch(`${playersURL}?jwt=${this.props.jwt}`)
+    .then(resp => {
+      if (resp.ok) { 
+        return resp.json()
+      }
+      else {throw new Error()}
+    })
+    .then(currentGame => this.setState({ currentGame: currentGame.game }))
+    .catch(() => {
+      window.history.pushState({pathname: '/'}, "", '/')
+    })
+  }
+
+  componentDidMount() {
+    if (this.props.jwt)
+      this.fetchOngoingGame()
+    else {console.log("This will load a new game")}
   }
 
   selectPiece = (piece) => {
@@ -51,7 +69,8 @@ class App extends React.Component {
   }
 
   render(){
-    console.log(this.state.pieceInPlay, this.state.destinationCell)
+    // console.log(this.state.pieceInPlay, this.state.destinationCell)
+    console.log(this.state.currentGame)
     return (
       <div className="container">
         <Header/>
