@@ -11,7 +11,7 @@ class Board extends React.Component {
       row.forEach((cell, i2) => {
         let cellId = `${this.props.boardId}${i1}${i2}`
         squaresArr.push(<Cell destinationCellClick={this.props.destinationCellClick} 
-          selectPiece={this.props.selectPiece} key={cellId} cellId={cellId} cell={cell} />)
+          selectPiece={this.props.selectPiece} key={cellId} cellId={cellId} cell={cell} getPiece={this.props.getPiece} />)
       })
     })
     return squaresArr

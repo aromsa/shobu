@@ -8,7 +8,7 @@ class BoardsContainer extends React.Component {
   render(){
     console.log(this.props.currentGame)
     let boards = this.props.currentGame.map((board, i) => <Board destinationCellClick={this.props.destinationCellClick} 
-    selectPiece={this.props.selectPiece} boardId={i} key={i} board={board}/>)
+    selectPiece={this.props.selectPiece} boardId={i} key={i} getPiece={this.props.getPiece} board={board}/>)
     return(
  
       <div className="boards-container">

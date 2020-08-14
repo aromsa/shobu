@@ -10,7 +10,7 @@ class Cell extends React.Component {
     return(
       <div onClick={() => {this.props.destinationCellClick(this.props.cellId)}} className="cell">
 
-        {this.props.cell ? <Piece selectPiece={this.props.selectPiece} pieceId={this.props.cell}/> : null}
+        {this.props.cell ? <Piece selectPiece={this.props.selectPiece} pieceId={this.props.cell} getPiece={this.props.getPiece}/> : null}
 
       </div>
     )
