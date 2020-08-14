@@ -78,9 +78,16 @@ h1 {
   border: 1px solid rgb(18, 187, 131);
 }
 
+img {
+  max-width: 75%;
+  max-height: 75%;
+  object-fit: contain;
+  padding: 3px;
+}
+
 .piece:hover {
   color:rgb(18, 187, 131);
-  display: grid;
+  /* display: grid; */
   box-sizing: border-box;
   justify-content: center;
   grid-template-columns: 45px;
