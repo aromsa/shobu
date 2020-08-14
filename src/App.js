@@ -30,7 +30,7 @@ class App extends React.Component {
       }
       else {throw new Error()}
     })
-    .then(currentGame => this.setState({ currentGame: currentGame }))
+    .then(currentGame => this.setState({ currentGame: currentGame.game }))
     .catch(() => {
       window.history.pushState({pathname: '/'}, "", '/')
     })
