@@ -17,7 +17,9 @@ class App extends React.Component {
     pieceInPlay: "",
     destinationCell: "",
     player1: {},
-    player2: {}
+    player2: {},
+    playerOnePiecesOut: 0,
+    playerTwoPiecesOut: 0,
   }
 
   fetchOngoingGame = () => {
@@ -63,7 +65,7 @@ class App extends React.Component {
       })
     })
     .then(resp => resp.json())
-    .then(this.setState({destinationCell: cellId}))
+    .then((game) => this.setState({currentGame: game}))
   }
 
   render(){
@@ -72,9 +74,10 @@ class App extends React.Component {
     return (
       <div className="container">
         <Header/>
-        <PlayerOne />
-        <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} currentGame={this.state.currentGame} />
-        <PlayerTwo/>
+        <PlayerOne piecesOut={this.state.playerOnePiecesOut} />
+        <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} 
+        currentGame={this.state.currentGame} />
+        <PlayerTwo piecesOut={this.state.playerTwoPiecesOut} />
         <footer>Footer</footer>
       </div>
     );
