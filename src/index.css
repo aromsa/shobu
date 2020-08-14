@@ -30,15 +30,24 @@ header {
 main {
   flex: 1;
   padding: 20px;
+  background-image: url("https://i.postimg.cc/SsLjYwZq/rope.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  align-items: center;
 }
 
 .player-1 {
+  align-items: stretch;
+  justify-content: space-evenly;
   text-align: center;
   background-color: rgb(222, 223, 228);
   padding: 20px;
 }
  
 .player-2 {
+  align-items: stretch;
+  justify-content: space-evenly;
   text-align: center;
   padding: 20px;
   background-color: rgb(222, 223, 228);
@@ -61,10 +70,16 @@ h1 {
 }
 
 .game-container {
-  justify-content: center;
+  /* background-image: url("https://i.postimg.cc/SsLjYwZq/rope.png");
+  background-repeat: no-repeat;
+  background-size: 100px 700px; */
+  align-items: stretch;
+  justify-content: space-evenly;
 }
 
 .cell  {
+  align-items: stretch;
+  justify-content: space-evenly;
   background: #eee;
   box-sizing: border-box;
   justify-content: center;
@@ -79,8 +94,10 @@ h1 {
 }
 
 img {
-  max-width: 75%;
-  max-height: 75%;
+  align-items: stretch;
+  justify-content: space-evenly;
+  max-width: 70%;
+  max-height: 70%;
   object-fit: contain;
   padding: 3px;
 }
@@ -92,15 +109,18 @@ img {
   justify-content: center;
   grid-template-columns: 45px;
   grid-template-rows: 45px;
-  border: 1px solid #888;
+  border: 1px solid #888;  
+  align-items: stretch;
+  justify-content: space-evenly;
 }
 
 .board {
+  align-items: stretch;
   box-sizing: border-box;
-  justify-content: center;
+  justify-content: space-evenly;
   grid-auto-flow: row;
   column-gap: 10px;
-  row-gap: 15px;
+  row-gap: 10px;
   display: grid;
   grid-template-columns: 50px 50px 50px 50px;
   grid-template-rows: 50px 50px 50px 50px;
@@ -108,12 +128,13 @@ img {
 }
 
 .boards-container {
+    align-items: stretch;
     box-sizing: border-box;
     grid-auto-flow: row;
-    justify-content: center;
+    justify-content: space-evenly;
     display: grid;
     grid-template-columns: 250px 250px;
     grid-template-rows: 250px 250px;
-    column-gap: 10px;
-    row-gap: 15px;
+    column-gap: 50px;
+    row-gap: 10px;
 }

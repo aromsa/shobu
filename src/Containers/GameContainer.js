@@ -10,7 +10,8 @@ class GameContainer extends React.Component {
 
     return(
       <main>
-      <h1>Game</h1>
+      
+      {/* <h1>Game</h1> */}
       <br></br>
       <br></br>
       <div className="game-container"></div>
