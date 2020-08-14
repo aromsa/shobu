@@ -20,12 +20,6 @@ class App extends React.Component {
     player2: {}
   }
 
-  // componentDidMount(){
-  //   fetch(gamesURL)
-  //   .then(resp => resp.json())
-  //   .then(currentGame => this.setState({ currentGame: currentGame }))
-  // }
-
   fetchOngoingGame = () => {
     fetch(`${playersURL}?jwt=${this.props.jwt}`)
     .then(resp => {
@@ -85,44 +79,6 @@ class App extends React.Component {
       </div>
     );
   } 
-
-  // noGameYet = () => {
-  //   return (
-  //     <div className="container">
-  //       <Header/>
-  //       <PlayerOne name="No Player 1 Yet" />
-  //       <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} currentGame={this.state.currentGame} />
-  //       <PlayerTwo name="No Player 2 Yet"/>
-  //       <footer>Footer</footer>
-  //     </div>
-  //   )
-  // }
-
-  // gameInProgress = routerProps => {
-  //   console.log(routerProps)
-  //   return (
-  //     <div className="container">
-  //       <Header/>
-  //       <PlayerOne name={this.state.player1.name} />
-  //       <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} currentGame={this.state.currentGame} />
-  //       <PlayerTwo name={this.state.player1.name}/>
-  //       <footer>Footer</footer>
-  //     </div>
-  //   )
-  // }
-
-  // render() {
-  //   console.log("heyo")
-   
-  //   return (
-  //     <Router>
-  //       <div>
-  //         <Route exact path="/" render={this.noGameYet}/>
-  //         <Route path="/gameinplay/:jwt" render={this.gameInProgress}/>
-  //       </div>
-  //     </Router>
-  //   )
-  // } 
 }
 
 export default App;
