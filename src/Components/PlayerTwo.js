@@ -7,7 +7,7 @@ class PlayerTwo extends React.Component {
   render(){
 
     return(
-      <div className="player-2">Player Two</div>
+      <div className="player-2">{this.props.name}</div>
     )
   }
 }
