@@ -12,7 +12,7 @@ class Piece extends React.Component {
     console.log(this.thePiece)
     return(
     <div onClick={(e) => {e.stopPropagation(); this.props.selectPiece(this.props.pieceId)}} className="piece">
-      <img src={thePiece.url} style={{transform: `rotate(${thePiece.rotation})`}}></img>
+      <img className="rock-img" src={thePiece.url} style={{transform: `rotate(${thePiece.rotation})`}}></img>
     </div>
     )
   }
