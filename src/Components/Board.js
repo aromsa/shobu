@@ -20,7 +20,7 @@ class Board extends React.Component {
   render(){
     // console.log(this.props.board)
     return(
-      <div className="board">
+      <div className={`${(parseInt(this.props.boardId)) < 2 ? "light-board" : "dark-board"}`}>
         {this.cells()}
       </div>
     )

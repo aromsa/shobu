@@ -8,7 +8,7 @@ class Cell extends React.Component {
   render(){
     // console.log(this.props.cellId)
     return(
-      <div onClick={() => {this.props.destinationCellClick(this.props.cellId)}} className="cell">
+      <div onClick={() => {this.props.destinationCellClick(this.props.cellId)}} className={`${(parseInt(this.props.cellId, 10)) < 150 ? "light-cell" : "dark-cell"}`}>
 
         {this.props.cell ? <Piece selectPiece={this.props.selectPiece} pieceId={this.props.cell} getPiece={this.props.getPiece}/> : null}
 
