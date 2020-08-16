@@ -85,7 +85,7 @@ class App extends React.Component {
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
         <PlayerTwo piecesOut={this.state.playerTwoPiecesOut} />
-        <footer>Footer</footer>
+        <footer></footer>
       </div>
     );
   } 
