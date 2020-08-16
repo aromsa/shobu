@@ -30,7 +30,7 @@ class App extends React.Component {
       if (resp.ok) { 
         return resp.json()
       }
-      else {throw new Error()}
+      else {throw new Error('Not a valid game link')}
     })
     .then(currentGame => {
        this.pieces = currentGame.pieces
