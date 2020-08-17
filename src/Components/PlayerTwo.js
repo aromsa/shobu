@@ -10,7 +10,7 @@ class PlayerTwo extends React.Component {
       <div className="player">
         <h1>Player Two</h1>
            <br></br>
-        <p>Pieces Out:{this.props.piecesOut}</p>
+        <p>Score:{this.props.piecesOut}</p>
       </div>
     )
   }
