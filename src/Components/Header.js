@@ -8,6 +8,7 @@ class Header extends React.Component {
   state = {menuOpen: false}
 
   showSettings = (event) => {
+    console.log('clicking menu')
     event.preventDefault();
     let boolean = !this.state.menuOpen
     this.setState({
@@ -23,7 +24,7 @@ class Header extends React.Component {
         
         <Menu right width={ '20%' } style={"cursor: pointer"}>   
         <br></br>
-        <a onClick={this.showSettings} id="new-game" className="menu-item">New Game</a>
+        <a onClick={() => this.props.newGame("Player 1", "Player 2")} id="new-game" className="menu-item">New Game</a>
         <br></br>
         <a onClick={this.showSettings} id="refresh-game" className="menu-item">Refresh Game</a>
         <br></br>

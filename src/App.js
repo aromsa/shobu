@@ -15,7 +15,7 @@ class App extends React.Component {
   pieces = {}
   players = []
   activeGame = !!this.props.jwt
-  gameInterval = ""  
+  gameInterval = null  
 
   state = {
     currentGame: [],
@@ -32,6 +32,30 @@ class App extends React.Component {
     fetch(`${gamesURL}?jwt=${this.props.jwt}`)
     .then(resp => resp.json())
     .then(game => this.setState({currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent}))
+  }
+
+  clearCurrentGame = () => {
+    if (this.gameInterval) { clearInterval(this.gameInterval) }
+  }
+
+  createNewGame = (player1Name, player2Name) => {
+    this.clearCurrentGame()
+    const configObj = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({player_1_name: player1Name, player_2_name: player2Name})
+    }
+    fetch(`${gamesURL}`, configObj)
+    .then(resp => {
+        return resp.json()
+    })
+    .then(currentGame => {
+      console.log(currentGame)
+       this.pieces = currentGame.pieces
+       this.setState({ currentGame: currentGame.game, you: currentGame.players.you, opponent: currentGame.players.opponent})
+       this.gameInterval = setInterval(this.checkForUpdates, 3000)
+       window.history.pushState({pathname: '/'}, "", `/gameinplay/${currentGame.players.you.url}`)
+    })
   }
 
   fetchOngoingGame = () => {
@@ -96,7 +120,7 @@ class App extends React.Component {
   render(){
     return (
       <div className="container">
-        <Header/>
+        <Header newGame={this.createNewGame}/>
         <PlayerOne piecesOut={this.state.playerOnePiecesOut} />
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
