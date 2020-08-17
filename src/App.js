@@ -5,6 +5,7 @@ import PlayerOne from './Components/PlayerOne'
 import PlayerTwo from './Components/PlayerTwo'
 import Header from './Components/Header'
 import GameContainer from './Containers/GameContainer'
+import Welcome from './Components/Welcome'
 
 const gamesURL = "http://localhost:3000/games"
 const movesURL = "http://localhost:3000/moves"
@@ -159,6 +160,7 @@ class App extends React.Component {
     return (
       <div className="container">
         <Header newGame={this.createNewGame} resetGame={this.resetOngoingGame} deleteGame={this.deleteOngoingGame}/>
+        {/* <Welcome/> */}
         <PlayerOne piecesOut={this.state.playerOnePiecesOut} />
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
