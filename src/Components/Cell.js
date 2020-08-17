@@ -6,7 +6,6 @@ import Piece from './Piece'
 class Cell extends React.Component {
 
   render(){
-    // console.log(this.props.cellId)
     return(
       <div onClick={() => {this.props.destinationCellClick(this.props.cellId)}} className={`${(parseInt(this.props.cellId, 10)) < 150 ? "light-cell" : "dark-cell"}`}>
 

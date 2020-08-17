@@ -14,7 +14,8 @@ class App extends React.Component {
 
   pieces = {}
   players = []
-  activeGame = !!this.props.jwt  
+  activeGame = !!this.props.jwt
+  gameInterval = ""  
 
   state = {
     currentGame: [],
@@ -22,8 +23,15 @@ class App extends React.Component {
     destinationCell: "",
     you: {},
     opponent: {},
-    playerOnePiecesOut: 0,
-    playerTwoPiecesOut: 0,
+    playerOnePiecesOut: [],
+    playerTwoPiecesOut: [],
+  }
+
+  checkForUpdates = () => {
+    console.log('interval fetch')
+    fetch(`${gamesURL}?jwt=${this.props.jwt}`)
+    .then(resp => resp.json())
+    .then(game => this.setState({currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent}))
   }
 
   fetchOngoingGame = () => {
@@ -37,6 +45,7 @@ class App extends React.Component {
     .then(currentGame => {
        this.pieces = currentGame.pieces
        this.setState({ currentGame: currentGame.game, you: currentGame.players.you, opponent: currentGame.players.opponent})
+       this.gameInterval = setInterval(this.checkForUpdates, 3000)
     })
     .catch(() => {
       window.history.pushState({pathname: '/'}, "", '/')
@@ -58,12 +67,15 @@ class App extends React.Component {
     })
   }
 
+  componentWillUnmount() {
+    clearInterval(this.gameInterval)
+  }
+
   destinationCellClick = (cellId) => {
     this.makeMove(cellId)
   }
 
   makeMove = (cellId) => {
-    console.log(cellId)
     fetch(movesURL, {
       method: "POST",
       headers: {
@@ -78,12 +90,10 @@ class App extends React.Component {
     .then(resp => resp.json())
     .then((game) => {
       console.log(game)
-      this.setState({currentGame: game.game})})
+      this.setState({currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent})})
   }
 
   render(){
-    // console.log(this.state.pieceInPlay, this.state.destinationCell)
-    console.log(this.pieces)
     return (
       <div className="container">
         <Header/>
