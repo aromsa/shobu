@@ -5,7 +5,9 @@ import { slide as Menu } from 'react-burger-menu'
 
 class Header extends React.Component {
 
-  showSettings (event) {
+  state = {menuOpen: false}
+
+  showSettings = (event) => {
     event.preventDefault();
     let boolean = !this.state.menuOpen
     this.setState({

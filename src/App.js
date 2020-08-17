@@ -12,14 +12,16 @@ const playersURL = "http://localhost:3000/players"
 
 class App extends React.Component {
 
-  pieces = "Can I declare this outside of a function?"  
+  pieces = {}
+  players = []
+  activeGame = !!this.props.jwt  
 
   state = {
     currentGame: [],
     pieceInPlay: "",
     destinationCell: "",
-    player1: {},
-    player2: {},
+    you: {},
+    opponent: {},
     playerOnePiecesOut: 0,
     playerTwoPiecesOut: 0,
   }
@@ -34,7 +36,7 @@ class App extends React.Component {
     })
     .then(currentGame => {
        this.pieces = currentGame.pieces
-       this.setState({ currentGame: currentGame.game })
+       this.setState({ currentGame: currentGame.game, you: currentGame.players.you, opponent: currentGame.players.opponent})
     })
     .catch(() => {
       window.history.pushState({pathname: '/'}, "", '/')
@@ -50,6 +52,7 @@ class App extends React.Component {
   }
 
   selectPiece = (piece) => {
+    console.log(piece)
     this.setState({
       pieceInPlay: piece
     })
@@ -60,6 +63,7 @@ class App extends React.Component {
   }
 
   makeMove = (cellId) => {
+    console.log(cellId)
     fetch(movesURL, {
       method: "POST",
       headers: {
@@ -72,7 +76,9 @@ class App extends React.Component {
       })
     })
     .then(resp => resp.json())
-    .then((game) => this.setState({currentGame: game}))
+    .then((game) => {
+      console.log(game)
+      this.setState({currentGame: game.game})})
   }
 
   render(){
