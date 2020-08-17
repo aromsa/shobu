@@ -90,6 +90,30 @@ class App extends React.Component {
     })
   }
 
+  deleteOngoingGame = () => {
+    clearInterval(this.gameInterval)
+    const configObj = {
+      method: "DELETE",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({jwt: this.state.you.url })
+    }
+    fetch(`${gamesURL}`, configObj)
+    .then(resp => resp.json())
+    .then(currentGame => {
+        console.log(currentGame)
+        this.setState({
+          currentGame: [],
+          pieceInPlay: "",
+          destinationCell: "",
+          you: {},
+          opponent: {},
+          playerOnePiecesOut: [],
+          playerTwoPiecesOut: [],
+        })
+        window.history.pushState({pathname: '/'}, "", '/')
+    })
+  } 
+
   getPiece = (pieceId) => this.pieces[pieceId]
 
   componentDidMount() {
@@ -134,7 +158,7 @@ class App extends React.Component {
   render(){
     return (
       <div className="container">
-        <Header newGame={this.createNewGame} resetGame={this.resetOngoingGame}/>
+        <Header newGame={this.createNewGame} resetGame={this.resetOngoingGame} deleteGame={this.deleteOngoingGame}/>
         <PlayerOne piecesOut={this.state.playerOnePiecesOut} />
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />

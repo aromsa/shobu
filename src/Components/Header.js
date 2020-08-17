@@ -28,7 +28,7 @@ class Header extends React.Component {
         <br></br>
         <a onClick={this.props.resetGame} id="refresh-game" className="menu-item">Refresh Game</a>
         <br></br>
-        <a onClick={this.showSettings} id="quit-game" className="menu-item">Quit Game</a>
+        <a onClick={this.props.deleteGame} id="quit-game" className="menu-item">Delete Game</a>
       </Menu>
         </header>
     )
