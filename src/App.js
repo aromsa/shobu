@@ -69,7 +69,7 @@ class App extends React.Component {
     .then(currentGame => {
        this.pieces = currentGame.pieces
        this.setState({ currentGame: currentGame.game, you: currentGame.players.you, opponent: currentGame.players.opponent})
-      //  this.gameInterval = setInterval(this.checkForUpdates, 3000)
+       this.gameInterval = setInterval(this.checkForUpdates, 3000)
     })
     .catch(() => {
       window.history.pushState({pathname: '/'}, "", '/')
