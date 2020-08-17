@@ -2,12 +2,16 @@ import React from 'react';
 import '../App.css';
 import '../index.css'
 
-class PlayerOne extends React.Component {
+class Player extends React.Component {
+
+  alertWithPlayerLink = () => {
+    alert(`http://localhost:3001/gameinplay/${this.props.player.url}`)
+  }
 
   render(){
     return(
       <div className="player">
-        <h1>Player One</h1>
+        <h1>{this.props.player.name}</h1>
         <br></br>
         <p>Score:{this.props.piecesOut.length}</p>
         <br></br>
@@ -30,12 +34,12 @@ class PlayerOne extends React.Component {
         <div className="item">16</div>
       </div>
         <div className="player-buttons">
-          <button>Update Player Info</button>
-          <button>Get Player 1 Link</button>
+          <button>Update {this.props.player.name}'s Info</button>
+          <button onClick={this.alertWithPlayerLink}>Get {this.props.player.name}'s Link</button>
         </div>
       </div>
     )
   }
 }
 
-export default PlayerOne
+export default Player

@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import './index.css'
-import PlayerOne from './Components/PlayerOne'
-import PlayerTwo from './Components/PlayerTwo'
+import Player from './Components/Player'
 import Header from './Components/Header'
 import GameContainer from './Containers/GameContainer'
 import Welcome from './Components/Welcome'
@@ -20,8 +19,8 @@ class App extends React.Component {
 
   state = {
     currentGame: [],
-    pieceInPlay: "",
-    destinationCell: "",
+    pieceInPlay: null,
+    destinationCell: [],
     you: {},
     opponent: {},
     playerOnePiecesOut: [],
@@ -29,7 +28,7 @@ class App extends React.Component {
   }
 
   checkForUpdates = () => {
-    console.log('interval fetch')
+    // console.log('interval fetch')
     fetch(`${gamesURL}?jwt=${this.props.jwt}`)
     .then(resp => resp.json())
     .then(game => this.setState({currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent}))
@@ -105,7 +104,7 @@ class App extends React.Component {
         this.setState({
           currentGame: [],
           pieceInPlay: "",
-          destinationCell: "",
+          destinationCell: [],
           you: {},
           opponent: {},
           playerOnePiecesOut: [],
@@ -125,17 +124,54 @@ class App extends React.Component {
 
   selectPiece = (piece) => {
     console.log(piece)
-    this.setState({
-      pieceInPlay: piece
-    })
+    if (this.state.destinationCell.length < 1)
+    {
+      this.setState({
+        pieceInPlay: piece
+      })
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.gameInterval)
   }
 
+  valueAtCell = (cellId) => {
+    return this.state.currentGame[cellId[0]][cellId[1]][cellId[2]]
+  }
+
+  capturePiece = (pieceInCell) => {
+    if (pieceInCell === this.state.pieceInPlay) {console.log("Deselected")}
+    else { 
+      console.log("Capturing this piece") 
+      const newGameBoard = [...this.state.currentGame]
+      // send an array of Moves (will need to update the create path of Moves Controller to accept arrays )
+      // update State
+    }
+  }
+
+  checkForPiece = () => {
+    const pieceInCell = this.valueAtCell(this.state.destinationCell[1])
+    return (pieceInCell)
+  }
+
+  evaluateForMakeMove = () => {
+    if (!this.state.pieceInPlay){return}
+    if (this.state.destinationCell.length > 1) {
+      if (!this.checkForPiece()) {
+        this.makeMove(this.state.destinationCell[1])
+      }
+      else {
+        this.capturePiece(this.checkForPiece())
+        this.setState({destinationCell: [], pieceInPlay: null})
+      }
+    }
+    // else {this.checkForPiece(cellId)}
+  }
+
   destinationCellClick = (cellId) => {
-    this.makeMove(cellId)
+    const newDestination = [...this.state.destinationCell, cellId]
+    this.setState({destinationCell: newDestination}, this.evaluateForMakeMove)
   }
 
   makeMove = (cellId) => {
@@ -153,18 +189,19 @@ class App extends React.Component {
     .then(resp => resp.json())
     .then((game) => {
       console.log(game)
-      this.setState({currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent})})
+      this.setState({pieceInPlay: null, destinationCell: [], currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent})})
   }
 
   render(){
+    // console.log(this.state.pieceInPlay, this.state.destinationCell)
     return (
       <div className="container">
         <Header newGame={this.createNewGame} resetGame={this.resetOngoingGame} deleteGame={this.deleteOngoingGame}/>
         {/* <Welcome/> */}
-        <PlayerOne piecesOut={this.state.playerOnePiecesOut} />
+        <Player player={this.state.you} piecesOut={this.state.playerOnePiecesOut} />
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
-        <PlayerTwo piecesOut={this.state.playerTwoPiecesOut} />
+        <Player player={this.state.opponent} piecesOut={this.state.playerTwoPiecesOut} />
         <footer></footer>
       </div>
     );
