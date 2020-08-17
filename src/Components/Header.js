@@ -26,7 +26,7 @@ class Header extends React.Component {
         <br></br>
         <a onClick={() => this.props.newGame("Player 1", "Player 2")} id="new-game" className="menu-item">New Game</a>
         <br></br>
-        <a onClick={this.showSettings} id="refresh-game" className="menu-item">Refresh Game</a>
+        <a onClick={this.props.resetGame} id="refresh-game" className="menu-item">Refresh Game</a>
         <br></br>
         <a onClick={this.showSettings} id="quit-game" className="menu-item">Quit Game</a>
       </Menu>

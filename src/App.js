@@ -69,10 +69,24 @@ class App extends React.Component {
     .then(currentGame => {
        this.pieces = currentGame.pieces
        this.setState({ currentGame: currentGame.game, you: currentGame.players.you, opponent: currentGame.players.opponent})
-       this.gameInterval = setInterval(this.checkForUpdates, 3000)
+      //  this.gameInterval = setInterval(this.checkForUpdates, 3000)
     })
     .catch(() => {
       window.history.pushState({pathname: '/'}, "", '/')
+    })
+  }
+
+  resetOngoingGame = () => {
+    const configObj = {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({jwt: this.state.you.url })
+    }
+    fetch(`${gamesURL}`, configObj)
+    .then(resp => resp.json())
+    .then(currentGame => {
+      console.log(currentGame)
+       this.setState({ currentGame: currentGame.game, playerOnePiecesOut: [], playerTwoPiecesOut: []})
     })
   }
 
@@ -120,7 +134,7 @@ class App extends React.Component {
   render(){
     return (
       <div className="container">
-        <Header newGame={this.createNewGame}/>
+        <Header newGame={this.createNewGame} resetGame={this.resetOngoingGame}/>
         <PlayerOne piecesOut={this.state.playerOnePiecesOut} />
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
