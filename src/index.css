@@ -83,6 +83,10 @@ main {
   
 }
 
+p {
+  font-size: 15px !important;
+}
+
 footer {
   grid-column: span 3;
   padding: 30px;
