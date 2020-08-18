@@ -58,11 +58,11 @@ class App extends React.Component {
         return resp.json()
     })
     .then(currentGame => {
-      console.log(currentGame)
        this.pieces = currentGame.pieces
        this.setState({ currentGame: currentGame.game, you: currentGame.players.you, opponent: currentGame.players.opponent})
        this.gameInterval = setInterval(this.checkForUpdates, 3000)
        window.history.pushState({pathname: '/'}, "", `/gameinplay/${currentGame.players.you.url}`)
+       window.location.reload()
     })
   }
 
@@ -93,7 +93,6 @@ class App extends React.Component {
     fetch(`${gamesURL}`, configObj)
     .then(resp => resp.json())
     .then(currentGame => {
-      console.log(currentGame)
       this.setState({ currentGame: currentGame.game, playerOnePiecesOut: [], playerTwoPiecesOut: []})
     })
   }
@@ -127,7 +126,7 @@ class App extends React.Component {
   componentDidMount() {
     if (this.props.jwt)
       this.fetchOngoingGame()
-    else {console.log("This will load a new game")}
+    else {}
   }
 
   selectPiece = (piece) => {
@@ -191,6 +190,7 @@ class App extends React.Component {
         accept: "application/json"
       },
       body: JSON.stringify({
+        jwt: this.state.you.url,
         piece_id: pieceId,
         coordinates: cellId
       })
@@ -211,6 +211,10 @@ class App extends React.Component {
       alert('The server is temporarily busy.  Please try your move again.')
     })
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("Previous State:", prevState, "Current State:", this.state)
+  // }
 
   render(){
     // console.log(this.state.pieceInPlay, this.state.destinationCell)

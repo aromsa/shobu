@@ -37,6 +37,7 @@ class Welcome extends React.Component {
           onChange={this.updateField}
           value={this.state.playerOneName}
           name="playerOneName"
+          placeholder="Player One"
           type="text"
           required />
       </label>
@@ -47,6 +48,7 @@ class Welcome extends React.Component {
           onChange={this.updateField}
           name="playerTwoName"
           value={this.state.playerTwoName}
+          placeholder="Player Two"
           type="text"
           required />
       </label>

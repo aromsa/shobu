@@ -10,7 +10,7 @@ class Player extends React.Component {
   }
 
   render(){
-    console.log(this.props.piecesOut)
+    // console.log(this.props.piecesOut)
     let piecesOut = this.props.piecesOut.map(piece => <Piece selectPiece={() => {}} pieceId={piece.id} getPiece={this.props.getPiece} />)
     
     return(
