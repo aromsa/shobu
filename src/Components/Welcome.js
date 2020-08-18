@@ -4,17 +4,39 @@ import '../index.css'
 
 class Welcome extends React.Component {
 
+  state = {
+    playerOneName:"",
+    playerTwoName:"",
+    TosChecked:false
+  }
+
+  updateField = (e) => {
+    let newState
+    if (e.target.name==="TosChecked") {newState= {TosChecked: !this.state.TosChecked}}
+    else {newState = {[e.target.name]:e.target.value}}
+    this.setState(newState)
+  }
+
+  createTheGame = (e) => {
+    e.preventDefault()
+    this.props.newGame(this.state.playerOneName, this.state.playerTwoName)
+  }
+
+
+
   render(){
 
     return(
       <div className="welcome">
-        <form className="form-body" >
+        <form className="form-body" onSubmit={this.createTheGame} >
       <h1>Start a new game!</h1>
       <br></br>
       <label>
         Player One's Name:
         <input
-          name="name"
+          onChange={this.updateField}
+          value={this.state.playerOneName}
+          name="playerOneName"
           type="text"
           required />
       </label>
@@ -22,14 +44,18 @@ class Welcome extends React.Component {
       <label>
         Player Two's Name:
         <input
-          name="name"
+          onChange={this.updateField}
+          name="playerTwoName"
+          value={this.state.playerTwoName}
           type="text"
           required />
       </label>
 
       <label>
         <input
-          name="acceptedTerms"
+          onChange={this.updateField}
+          checked={this.state.TosChecked}
+          name="TosChecked"
           type="checkbox"
           required />
         I accept the terms of service        

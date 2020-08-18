@@ -30,8 +30,16 @@ class App extends React.Component {
   checkForUpdates = () => {
     // console.log('interval fetch')
     fetch(`${gamesURL}?jwt=${this.props.jwt}`)
-    .then(resp => resp.json())
+    .then(resp => {
+      if (resp.ok) { 
+        return resp.json()
+      }
+      else {throw new Error('The server is temporarily busy.  Fetching again soon')}
+    })
     .then(game => this.setState({currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent}))
+    .catch(() => {
+      console.log('The server is temporarily busy.  Fetching again soon')
+    })
   }
 
   clearCurrentGame = () => {
@@ -86,7 +94,7 @@ class App extends React.Component {
     .then(resp => resp.json())
     .then(currentGame => {
       console.log(currentGame)
-       this.setState({ currentGame: currentGame.game, playerOnePiecesOut: [], playerTwoPiecesOut: []})
+      this.setState({ currentGame: currentGame.game, playerOnePiecesOut: [], playerTwoPiecesOut: []})
     })
   }
 
@@ -187,11 +195,21 @@ class App extends React.Component {
         coordinates: cellId
       })
     })
-    .then(resp => resp.json())
+    .then(resp => {
+      if (resp.ok) { 
+        return resp.json()
+      }
+      else {throw new Error('The server is temporarily busy.  Please try your move again.')}
+    })
     .then((game) => {
       console.log(game)
-      this.setState({pieceInPlay: null, destinationCell: [], currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent})})
+      this.setState({pieceInPlay: null, destinationCell: [], currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent})
       if (callbackMakeMove) {callbackMakeMove()}
+    })
+    .catch(() => {
+      this.setState({pieceInPlay: null, destinationCell: []})
+      alert('The server is temporarily busy.  Please try your move again.')
+    })
   }
 
   render(){
@@ -200,10 +218,11 @@ class App extends React.Component {
       <div className="container">
         <Header newGame={this.createNewGame} resetGame={this.resetOngoingGame} deleteGame={this.deleteOngoingGame}/>
         {/* <Welcome/> */}
-        <Player getPiece={this.getPiece} player={this.state.you} piecesOut={this.state.playerOnePiecesOut} />
+        {this.props.jwt ? <>
+        <Player getPiece={this.getPiece} player={this.state.you} piecesOut={this.state.playerOnePiecesOut} /> />
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
-        <Player player={this.state.opponent} piecesOut={this.state.playerTwoPiecesOut} />
+        <Player player={this.state.opponent} piecesOut={this.state.playerTwoPiecesOut} /></> : <Welcome newGame={this.createNewGame}/> }
         <footer></footer>
       </div>
     );
