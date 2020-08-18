@@ -123,9 +123,9 @@ class App extends React.Component {
   }
 
   selectPiece = (piece) => {
-    console.log(piece)
     if (this.state.destinationCell.length < 1)
     {
+      console.log(piece)
       this.setState({
         pieceInPlay: piece
       })
@@ -140,11 +140,12 @@ class App extends React.Component {
     return this.state.currentGame[cellId[0]][cellId[1]][cellId[2]]
   }
 
-  capturePiece = (pieceInCell) => {
+  capturePiece = async (pieceInCell) => {
     if (pieceInCell === this.state.pieceInPlay) {console.log("Deselected")}
     else { 
-      console.log("Capturing this piece") 
-      const newGameBoard = [...this.state.currentGame]
+      console.log("Capturing this piece", pieceInCell) 
+      // const newGameBoard = [...this.state.currentGame]
+      this.makeMove(this.state.destinationCell[1], this.state.pieceInPlay, () => this.makeMove("400", pieceInCell))
       // send an array of Moves (will need to update the create path of Moves Controller to accept arrays )
       // update State
     }
@@ -159,7 +160,7 @@ class App extends React.Component {
     if (!this.state.pieceInPlay){return}
     if (this.state.destinationCell.length > 1) {
       if (!this.checkForPiece()) {
-        this.makeMove(this.state.destinationCell[1])
+        this.makeMove(this.state.destinationCell[1], this.state.pieceInPlay)
       }
       else {
         this.capturePiece(this.checkForPiece())
@@ -174,7 +175,7 @@ class App extends React.Component {
     this.setState({destinationCell: newDestination}, this.evaluateForMakeMove)
   }
 
-  makeMove = (cellId) => {
+  makeMove = (cellId, pieceId, callbackMakeMove) => {
     fetch(movesURL, {
       method: "POST",
       headers: {
@@ -182,7 +183,7 @@ class App extends React.Component {
         accept: "application/json"
       },
       body: JSON.stringify({
-        piece_id: this.state.pieceInPlay,
+        piece_id: pieceId,
         coordinates: cellId
       })
     })
@@ -190,6 +191,7 @@ class App extends React.Component {
     .then((game) => {
       console.log(game)
       this.setState({pieceInPlay: null, destinationCell: [], currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent})})
+      if (callbackMakeMove) {callbackMakeMove()}
   }
 
   render(){
