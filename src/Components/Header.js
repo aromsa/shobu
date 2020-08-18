@@ -15,6 +15,11 @@ class Header extends React.Component {
     this.setState({menuOpen: false})
   }
 
+  newGame = () => {
+    window.history.pushState({pathname: '/'}, "", "/")
+    window.location.reload()
+  }
+
   render(){
 
     return(
@@ -23,7 +28,7 @@ class Header extends React.Component {
         
         <Menu right width={ '20%' } style={"cursor: pointer"} isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>   
         <br></br>
-        <a onClick={() => { this.closeMenu(); this.props.newGame("Player 1", "Player 2")}} id="new-game" className="menu-item">New Game</a>
+        <a onClick={() => { this.closeMenu(); this.newGame("Player 1", "Player 2")}} id="new-game" className="menu-item">New Game</a>
         <br></br>
         <a onClick={() => { this.closeMenu(); this.props.resetGame()}} id="refresh-game" className="menu-item">Refresh Game</a>
         <br></br>
