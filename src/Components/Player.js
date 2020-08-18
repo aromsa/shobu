@@ -29,7 +29,6 @@ class Player extends React.Component {
         <br></br>
           <p>Score: {this.props.piecesOut.length}</p>
         <br></br>
-        <br></br>
         <div className="player-container">
         {piecesOut}
         </div>
