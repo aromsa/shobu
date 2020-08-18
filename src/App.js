@@ -200,7 +200,7 @@ class App extends React.Component {
       <div className="container">
         <Header newGame={this.createNewGame} resetGame={this.resetOngoingGame} deleteGame={this.deleteOngoingGame}/>
         {/* <Welcome/> */}
-        <Player player={this.state.you} piecesOut={this.state.playerOnePiecesOut} />
+        <Player getPiece={this.getPiece} player={this.state.you} piecesOut={this.state.playerOnePiecesOut} />
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
         <Player player={this.state.opponent} piecesOut={this.state.playerTwoPiecesOut} />
