@@ -217,12 +217,11 @@ class App extends React.Component {
     return (
       <div className="container">
         <Header newGame={this.createNewGame} resetGame={this.resetOngoingGame} deleteGame={this.deleteOngoingGame}/>
-        {/* <Welcome/> */}
         {this.props.jwt ? <>
-        <Player getPiece={this.getPiece} player={this.state.you} piecesOut={this.state.playerOnePiecesOut} /> />
+        <Player getPiece={this.getPiece} player={this.state.you} piecesOut={this.state.playerOnePiecesOut} />
         <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
-        <Player player={this.state.opponent} piecesOut={this.state.playerTwoPiecesOut} /></> : <Welcome newGame={this.createNewGame}/> }
+        <Player getPiece={this.getPiece} player={this.state.opponent} piecesOut={this.state.playerTwoPiecesOut} /></> : <Welcome newGame={this.createNewGame}/> }
         <footer></footer>
       </div>
     );

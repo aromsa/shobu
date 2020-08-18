@@ -10,7 +10,9 @@ class Player extends React.Component {
   }
 
   render(){
-    // let piecesOut = this.props.piecesOut.map(piece => <Piece pieceId={piece} getPiece={this.props.getPiece} />)
+    console.log(this.props.piecesOut)
+    let piecesOut = this.props.piecesOut.map(piece => <Piece selectPiece={() => {}} pieceId={piece.id} getPiece={this.props.getPiece} />)
+    
     return(
       <div className="player">
         <h1>{this.props.player.name}</h1>
@@ -18,7 +20,10 @@ class Player extends React.Component {
         <p>Score:{this.props.piecesOut.length}</p>
         <br></br>
         <br></br>
-        {/* {piecesOut} */}
+        <div className="player-container">
+        {piecesOut}
+        </div>
+      
         <div className="player-buttons">
           <button>Update {this.props.player.name}'s Info</button>
           <button onClick={this.alertWithPlayerLink}>Get {this.props.player.name}'s Link</button>
