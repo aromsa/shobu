@@ -8,7 +8,6 @@ class Piece extends React.Component {
   
 
   render(){
-    console.log(this.props)
     const thePiece = this.props.getPiece(this.props.pieceId)
     // console.log(this.props.isPieceSelected(this.props.pieceId) ? "It's selected" : null)
     return(

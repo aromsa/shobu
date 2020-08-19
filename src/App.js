@@ -6,16 +6,17 @@ import Header from './Components/Header'
 import GameContainer from './Containers/GameContainer'
 import Welcome from './Components/Welcome'
 
-// const gamesURL = "http://localhost:3000/games"
-// const movesURL = "http://localhost:3000/moves"
-// const playersURL = "http://localhost:3000/players"
+const gamesURL = "http://localhost:3000/games"
+const movesURL = "http://localhost:3000/moves"
+const playersURL = "http://localhost:3000/players"
 
-const gamesURL = "https://shobu-game-backend.herokuapp.com/games"
-const movesURL = "https://shobu-game-backend.herokuapp.com/moves"
-const playersURL = "https://shobu-game-backend.herokuapp.com/players"
+// const gamesURL = "https://shobu-game-backend.herokuapp.com/games"
+// const movesURL = "https://shobu-game-backend.herokuapp.com/moves"
+// const playersURL = "https://shobu-game-backend.herokuapp.com/players"
 
 class App extends React.Component {
 
+  shouldFetch = true
   pieces = {}
   players = []
   activeGame = !!this.props.jwt
@@ -34,7 +35,8 @@ class App extends React.Component {
   isPieceSelected = (pieceId) => pieceId===this.state.pieceInPlay
 
   checkForUpdates = () => {
-    // console.log('interval fetch')
+    if (!this.shouldFetch) {return}
+    console.log('interval fetch')
     fetch(`${gamesURL}?jwt=${this.props.jwt}`)
     .then(resp => {
       if (resp.ok) { 
@@ -70,6 +72,19 @@ class App extends React.Component {
        window.history.pushState({pathname: '/'}, "", `/gameinplay/${currentGame.players.you.url}`)
        window.location.reload()
     })
+  }
+
+  deepCopyOfCurrentGame = () => {
+    let newAr0 = []
+    this.state.currentGame.forEach(board => {
+      let newAr1 = []
+      board.forEach(row => {
+        let newAr2 = [...row]
+        newAr1 = [...newAr1, newAr2]
+      })
+      newAr0 = [...newAr0, newAr1]
+    })
+    return newAr0
   }
 
   fetchOngoingGame = () => {
@@ -139,6 +154,7 @@ class App extends React.Component {
   selectPiece = (piece) => {
     if (this.state.destinationCell.length < 1)
     {
+      this.shouldFetch = false
       console.log(piece)
       this.setState({
         pieceInPlay: piece
@@ -154,13 +170,15 @@ class App extends React.Component {
     return this.state.currentGame[cellId[0]][cellId[1]][cellId[2]]
   }
 
-  capturePiece = async (pieceInCell) => {
+  capturePiece = (pieceInCell) => {
     if (pieceInCell === this.state.pieceInPlay) {console.log("Deselected")}
     else { 
       console.log("Capturing this piece", pieceInCell) 
       // const newGameBoard = [...this.state.currentGame]
-      this.makeMove(this.state.destinationCell[1], this.state.pieceInPlay, () => this.makeMove("400", pieceInCell))
-      // this.quickRenderMove(this.state.destinationCell[1], "400", pieceInCell, () => this.quickRenderMove(this.state.destinationCell[0], this.state.destinationCell[1], this.state.pieceInPlay))
+      const tempFromCell = this.state.destinationCell[0]
+      const tempToCell = this.state.destinationCell[1]
+      this.makeMove(this.state.destinationCell[1], this.state.pieceInPlay, () => this.makeMove("400", pieceInCell, null, () => this.shouldFetch=true))
+      this.quickRenderMove(tempFromCell, tempToCell, this.state.pieceInPlay)
       // send an array of Moves (will need to update the create path of Moves Controller to accept arrays )
       // update State
     }
@@ -175,8 +193,8 @@ class App extends React.Component {
     if (!this.state.pieceInPlay){return}
     if (this.state.destinationCell.length > 1) {
       if (!this.checkForPiece()) {
-        this.makeMove(this.state.destinationCell[1], this.state.pieceInPlay)
-        // this.quickRenderMove(this.state.destinationCell[0], this.state.destinationCell[1], this.state.pieceInPlay)
+        this.makeMove(this.state.destinationCell[1], this.state.pieceInPlay, null, () => this.shouldFetch=true)
+        this.quickRenderMove(this.state.destinationCell[0], this.state.destinationCell[1], this.state.pieceInPlay)
       }
       else {
         this.capturePiece(this.checkForPiece())
@@ -191,14 +209,15 @@ class App extends React.Component {
     this.setState({destinationCell: newDestination}, this.evaluateForMakeMove)
   }
 
-  // quickRenderMove = (fromCellId, toCellId, pieceId, callBackMakeMove = () => {}) => {
-  //   const tempBoard = [...this.state.currentGame]
-  //   tempBoard[fromCellId[0]][fromCellId[1]][fromCellId[2]] = null
-  //   tempBoard[toCellId[0]][toCellId[1]][toCellId[2]] = pieceId
-  //   this.setState({currentGame: tempBoard}, callBackMakeMove)
-  // }
+  quickRenderMove = (fromCellId, toCellId, pieceId) => {
+    const tempBoard = this.deepCopyOfCurrentGame()
+    tempBoard[fromCellId[0]][fromCellId[1]][fromCellId[2]] = null
+    tempBoard[toCellId[0]][toCellId[1]][toCellId[2]] = pieceId
+    this.setState({pieceInPlay: null, destinationCell: [], currentGame: tempBoard})
+  }
 
-  makeMove = (cellId, pieceId, callbackMakeMove) => {
+  makeMove = (cellId, pieceId, callbackMakeMove, turnIntervalOn = () => {}) => {
+    console.log(`cellId: ${cellId}, pieceId: ${pieceId}`)
     fetch(movesURL, {
       method: "POST",
       headers: {
@@ -219,11 +238,11 @@ class App extends React.Component {
     })
     .then((game) => {
       console.log(game)
-      this.setState({pieceInPlay: null, destinationCell: [], currentGame: game.game, playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent})
+      this.setState({playerOnePiecesOut: game.pieces_out.you, playerTwoPiecesOut: game.pieces_out.opponent}, turnIntervalOn)
       if (callbackMakeMove) {callbackMakeMove()}
     })
     .catch(() => {
-      this.setState({pieceInPlay: null, destinationCell: []})
+      this.setState({}, turnIntervalOn)
       alert('The server is temporarily busy.  Please try your move again.')
     })
   }
