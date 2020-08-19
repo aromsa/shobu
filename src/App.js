@@ -31,6 +31,8 @@ class App extends React.Component {
     playerTwoPiecesOut: [],
   }
 
+  isPieceSelected = (pieceId) => pieceId===this.state.pieceInPlay
+
   checkForUpdates = () => {
     // console.log('interval fetch')
     fetch(`${gamesURL}?jwt=${this.props.jwt}`)
@@ -158,6 +160,7 @@ class App extends React.Component {
       console.log("Capturing this piece", pieceInCell) 
       // const newGameBoard = [...this.state.currentGame]
       this.makeMove(this.state.destinationCell[1], this.state.pieceInPlay, () => this.makeMove("400", pieceInCell))
+      // this.quickRenderMove(this.state.destinationCell[1], "400", pieceInCell, () => this.quickRenderMove(this.state.destinationCell[0], this.state.destinationCell[1], this.state.pieceInPlay))
       // send an array of Moves (will need to update the create path of Moves Controller to accept arrays )
       // update State
     }
@@ -173,6 +176,7 @@ class App extends React.Component {
     if (this.state.destinationCell.length > 1) {
       if (!this.checkForPiece()) {
         this.makeMove(this.state.destinationCell[1], this.state.pieceInPlay)
+        // this.quickRenderMove(this.state.destinationCell[0], this.state.destinationCell[1], this.state.pieceInPlay)
       }
       else {
         this.capturePiece(this.checkForPiece())
@@ -186,6 +190,13 @@ class App extends React.Component {
     const newDestination = [...this.state.destinationCell, cellId]
     this.setState({destinationCell: newDestination}, this.evaluateForMakeMove)
   }
+
+  // quickRenderMove = (fromCellId, toCellId, pieceId, callBackMakeMove = () => {}) => {
+  //   const tempBoard = [...this.state.currentGame]
+  //   tempBoard[fromCellId[0]][fromCellId[1]][fromCellId[2]] = null
+  //   tempBoard[toCellId[0]][toCellId[1]][toCellId[2]] = pieceId
+  //   this.setState({currentGame: tempBoard}, callBackMakeMove)
+  // }
 
   makeMove = (cellId, pieceId, callbackMakeMove) => {
     fetch(movesURL, {
@@ -228,7 +239,7 @@ class App extends React.Component {
         <Header resetGame={this.resetOngoingGame} deleteGame={this.deleteOngoingGame}/>
         {this.props.jwt ? <>
         <Player getPiece={this.getPiece} player={this.state.you} piecesOut={this.state.playerOnePiecesOut} />
-        <GameContainer destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
+        <GameContainer isPieceSelected={this.isPieceSelected} destinationCellClick={this.destinationCellClick} selectPiece={this.selectPiece} getPiece={this.getPiece}
         currentGame={this.state.currentGame} />
         <Player getPiece={this.getPiece} player={this.state.opponent} piecesOut={this.state.playerTwoPiecesOut} /></> : <Welcome newGame={this.createNewGame}/> }
         <footer></footer>

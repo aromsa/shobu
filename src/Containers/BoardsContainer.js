@@ -6,7 +6,7 @@ import Board from '../Components/Board'
 class BoardsContainer extends React.Component {
 
   render(){
-    let boards = this.props.currentGame.map((board, i) => <Board destinationCellClick={this.props.destinationCellClick} 
+    let boards = this.props.currentGame.map((board, i) => <Board isPieceSelected={this.props.isPieceSelected} destinationCellClick={this.props.destinationCellClick} 
     selectPiece={this.props.selectPiece} boardId={i} key={i} getPiece={this.props.getPiece} board={board}/>)
     return(
  

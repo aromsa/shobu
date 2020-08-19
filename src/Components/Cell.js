@@ -9,7 +9,7 @@ class Cell extends React.Component {
     return(
       <div onClick={() => {this.props.destinationCellClick(this.props.cellId)}} className={`${(parseInt(this.props.cellId, 10)) < 150 ? "light-cell" : "dark-cell"}`}>
 
-        {this.props.cell ? <Piece selectPiece={this.props.selectPiece} pieceId={this.props.cell} getPiece={this.props.getPiece}/> : null}
+        {this.props.cell ? <Piece isPieceSelected={this.props.isPieceSelected} selectPiece={this.props.selectPiece} pieceId={this.props.cell} getPiece={this.props.getPiece}/> : null}
 
       </div>
     )

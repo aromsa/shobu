@@ -16,7 +16,7 @@ class GameContainer extends React.Component {
       <br></br>
       <br></br>
       <div className="game-container"></div>
-      <BoardsContainer destinationCellClick={this.props.destinationCellClick} 
+      <BoardsContainer isPieceSelected={this.props.isPieceSelected} destinationCellClick={this.props.destinationCellClick} 
       selectPiece={this.props.selectPiece} getPiece={this.props.getPiece} currentGame={this.props.currentGame} />
       </main>
     )

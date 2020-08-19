@@ -168,6 +168,12 @@ h1 {
   padding: 10px;
 }
 
+.rock-select {
+  /* background-color: yellow; */
+  max-width: 150%;
+  max-height: 150%;
+}
+
 /* .piece:hover {
   width: 60px;
   height: 60px;
