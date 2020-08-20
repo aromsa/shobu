@@ -6,7 +6,7 @@ import Piece from './Piece'
 class Player extends React.Component {
 
   alertWithPlayerLink = () => {
-    alert(`http://localhost:3001/gameinplay/${this.props.player.url}`)
+    alert(`http://localhost:3000/gameinplay/${this.props.player.url}`)
   }
 
   color = () => {

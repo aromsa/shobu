@@ -6,13 +6,13 @@ import Header from './Components/Header'
 import GameContainer from './Containers/GameContainer'
 import Welcome from './Components/Welcome'
 
-const gamesURL = "http://localhost:3000/games"
-const movesURL = "http://localhost:3000/moves"
-const playersURL = "http://localhost:3000/players"
+// const gamesURL = "http://localhost:3000/games"
+// const movesURL = "http://localhost:3000/moves"
+// const playersURL = "http://localhost:3000/players"
 
-// const gamesURL = "https://shobu-game-backend.herokuapp.com/games"
-// const movesURL = "https://shobu-game-backend.herokuapp.com/moves"
-// const playersURL = "https://shobu-game-backend.herokuapp.com/players"
+const gamesURL = "https://shobu-game-backend.herokuapp.com/games"
+const movesURL = "https://shobu-game-backend.herokuapp.com/moves"
+const playersURL = "https://shobu-game-backend.herokuapp.com/players"
 
 class App extends React.Component {
 
